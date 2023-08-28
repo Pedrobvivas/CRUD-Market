@@ -1,16 +1,34 @@
 package entities;
 
+import entities.enums.TipoProduto;
+
 public class Produto {
 
 	private String nome;
-	private int tipo;
+	private TipoProduto tipo;
+	private int id;
 	
 	public Produto(){
 	}
 	
-	public Produto(String nome, int tipo) {
+	
+	
+	public int  getId() {
+		return id;
+	}
+
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+
+	public Produto(String nome, TipoProduto tipo, int id) {
 		this.nome = nome;
 		this.tipo = tipo;
+		this.id = id;
 	}
 
 	public String getNome() {
@@ -21,11 +39,11 @@ public class Produto {
 		this.nome = nome;
 	}
 
-	public int getTipo() {
+	public TipoProduto getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(int tipo) {
+	public void setTipo(TipoProduto tipo) {
 		this.tipo = tipo;
 	}
 
@@ -36,7 +54,7 @@ public class Produto {
 
 	
 	public String toString() {
-		return "nome: " + nome + ", tipo: " + tipo;
+		return "nome: " + nome + ", tipo: " + tipo + ", id: "+id;
 	}
 
 }
