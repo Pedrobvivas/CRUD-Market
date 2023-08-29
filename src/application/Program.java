@@ -3,6 +3,7 @@ package application;
 import java.util.Scanner;
 
 import entities.Funcoes;
+import entities.Menu;
 import entities.enums.TipoProduto;
 
 public class Program {
@@ -10,43 +11,28 @@ public class Program {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		Funcoes funcao = new Funcoes();
-		int x;
+		Menu menu=new Menu();
+		int opcao,opcao1,opcao2,opcao3,opcao4;
+		TipoProduto tipo;
+		int id;
+		String razaoSocial;
+		
+		
 		do {
-			System.out.println("=====================Bem-vindo ao Vivas Market=============================");
-			System.out.println("Selecione o que deseja fazer: ");
-			System.out.println(
-					"1- Realizar cadastro \n2- Realizar atualização \n3- Realizar exclusão \n4- Gerar relatório \n5- Sair");
-			x = sc.nextInt();
+			menu.menuPrincipal();
+			opcao = sc.nextInt();
 			sc.nextLine();
 
-			char numero = String.valueOf(x).charAt(0);
-
-			switch (numero) {
-			case '1':
-				System.out.println("Você selecionou 1, selecione o que deseja cadastrar:");
-				System.out.println("1- Cadastrar produto \n2- Cadastrar fornecedor");
-				int y = sc.nextInt();
-				sc.nextLine();
-				switch (y) {
+			switch (opcao) {
+			case 1:
+				menu.menuCase1(opcao1,sc);
+				
+				switch (opcao1) {
 				case 1:
-					System.out.print("Você selecionou produto, digite o nome do produto: ");
-					String nome = sc.nextLine();
-					System.out.print("Digite o tipo: ");
-					TipoProduto tipo = TipoProduto.valueOf(sc.next().toUpperCase());
-					System.out.print("Digite o id do fornecedor: ");
-					int id = sc.nextInt();
-					funcao.adicionarProduto(nome, tipo, id);
-
+					menu.addProduto(nome,sc, tipo, opcao4);
 					break;
 				case 2:
-					System.out.print("Você selecionou fornecedor, digite o id: ");
-					id = sc.nextInt();
-					sc.nextLine();
-					System.out.print("Digite a razão social: ");
-					String razaoSocial = sc.nextLine();
-					System.out.print("Digite o CNPJ: ");
-					int cnpj = sc.nextInt();
-					funcao.adicionarFornecedor(id, razaoSocial, cnpj);
+					menu.addFornecedor(id, sc, razaoSocial, id);
 					break;
 				default:
 					System.out.println("Opção inválida");
@@ -54,40 +40,19 @@ public class Program {
 				}
 				break;
 
-			case '2':
-				System.out.println("Você selecionou 2, selecione o que deseja atualizar:");
-				System.out.println("1- Atualizar produto \n2- Atualizar fornecedor");
-				y = sc.nextInt();
-				switch (y) {
+			case 2:
+				menu.menuCase2(opcao2, sc);
+				switch (opcao2) {
 				case 1:
-					System.out.println("Você selecionou 1, digite qual produto deseja atualizar");
-					funcao.mostrarProdutos();
-					sc.nextLine();
-					System.out.println("Nome do produto que quer editar: ");
-					String nomeAntigo=sc.nextLine();
-					System.out.print("Novo nome: ");
-					String nomeNovo=sc.nextLine();
-					System.out.print("Novo tipo: ");
-					TipoProduto tipo= TipoProduto.valueOf(sc.next().toUpperCase());
-					System.out.print("Novo id: ");
-					int id=sc.nextInt();
-					funcao.editarProduto(nomeAntigo,nomeNovo, id, tipo);
-					System.out.println("Produto alterado com sucesso!");
+					String nomeAntigo;
+					String nomeNovo;
+					menu.attProduto( sc, nomeAntigo, nomeNovo, tipo, id);
 					break;
 				case 2:
-					System.out.println("Você selecionou 2, digite qual fornecedor deseja atualizar");
-					funcao.mostrarFornecedores();
-					sc.nextLine();
-					System.out.print("Razao social do fornecedor que quer editar: ");
-					String razaoSocialAntiga=sc.nextLine();
-					System.out.println("Nova razao social: ");
-					String razaoSocialNova=sc.nextLine();
-					System.out.println("id novo: ");
-					id=sc.nextInt();
-					System.out.println("CNPJ: ");
-					int cnpj=sc.nextInt();
-					funcao.editarFornecedor(razaoSocialAntiga, razaoSocialNova, id, cnpj);
-					System.out.println("Fornecedor alterado com sucesso!");
+					String razaoSocialAntiga;
+					String razaoSocialNova;
+					int cnpj;
+					menu.attFornecedor(sc, razaoSocialAntiga, razaoSocialNova, id, cnpj);
 					break;
 				default:
 					System.out.println("Opção inválida");
@@ -95,21 +60,11 @@ public class Program {
 				}
 				break;
 
-			case '3':
-				System.out.println("Você selecionou 3, selecione o que deseja excluir: ");
-				System.out.println("1- Excluir produto \n2- Excluir fornecedor");
-				y = sc.nextInt();
-				switch (y) {
+			case 3:
+				menu.menuCase3(opcao3, sc);
+				switch (opcao3) {
 				case 1:
-					System.out.println("Você selecionou 1, escolha qual produto deseja excluir: ");
-					funcao.mostrarProdutos();
-					System.out.print("Digite o nome: ");
-					String nome = sc.nextLine();
-					System.out.print("Tipo: ");
-					TipoProduto tipo = TipoProduto.valueOf(sc.next().toUpperCase());
-					System.out.println("id do fornecedor");
-					int id = sc.nextInt();
-					funcao.deletarProduto(nome, tipo, id);
+					menu.excluirProduto(nome, sc, tipo, id);
 					break;
 				case 2:
 					System.out.println("Você selecionou 2, escolha qual fornecedor deseja excluir: ");
@@ -129,8 +84,8 @@ public class Program {
 				System.out.println(
 						"1- Relatório de fornecedor por produto \n2- Relatório de produto por fornecedor \n3- Relatório de produto por tipo"
 								+ "\n4- Relatório de fornecedores e produtos");
-				y=sc.nextInt();
-				switch(y) {
+				opcao4 =sc.nextInt();
+				switch(opcao4) {
 				
 				case 4:funcao.mostrarProdutosEFornecedores();
 				}
@@ -146,7 +101,8 @@ public class Program {
 				break;
 			}
 		System.out.println("=============================================================================================");
-		} while (x != 5);
+		} while (opcao != 5);
 		sc.close();
 	}
+
 }

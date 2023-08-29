@@ -102,5 +102,5 @@ public class Funcoes {
 			fornecedor.setCnpj(cnpj);
 		}
 	}
-
+	
 }
