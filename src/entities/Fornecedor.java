@@ -1,34 +1,22 @@
 package entities;
 
+import java.util.Random;
+
 public class Fornecedor {
 
+	Random random = new Random();
 	private int id;
 	private String razaosocial;
 	private int cnpj;
-	
-	
-	
-	public Fornecedor(int id) {
-		this.id = id;
-	}
 
-	public Fornecedor(){
-	}
-
-	public Fornecedor(int id, String razaosocial, int cnpj) {
-		this.id = id;
+	public Fornecedor(String razaosocial, int cnpj) {
+		this.id = random.nextInt(100);
 		this.razaosocial = razaosocial;
 		this.cnpj = cnpj;
 	}
 
-
-
 	public int getId() {
 		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public int getCnpj() {
@@ -51,7 +39,5 @@ public class Fornecedor {
 	public String toString() {
 		return "id=" + id + ", cnpj=" + cnpj + ", razaosocial=" + razaosocial + "";
 	}
-
-
 
 }
