@@ -11,6 +11,7 @@ public class Funcoes {
 
 	private List<Produto> produtos;
 	private List<Fornecedor> fornecedores;
+	private String prodAtual;
 
 	public Funcoes() {
 		produtos = new ArrayList<>();
@@ -64,10 +65,73 @@ public class Funcoes {
 
 	}
 
-	public void adicionarProduto(String nome, TipoProduto tipo, int id) {
-		Produto produto = new Produto(nome, tipo, id);
+	public void adicionarProduto(String nome, TipoProduto tipo, int idFornecedor, int idProduto) {
+		Produto produto = new Produto(nome, tipo, idFornecedor, idProduto);
 		produtos.add(produto);
 		System.out.println("Produto adicionado com sucesso! ");
+	}
+
+	public void mostrarProdutos() {
+		System.out.println("Produtos: ");
+		for (Produto x : produtos)
+			System.out.println(x);
+	}
+
+	public boolean deletarFornecedor(int id) {
+		for (Fornecedor fornecedor : fornecedores) {
+			if (fornecedor.getId() == id) {	
+				for(Produto produto : produtos) {
+					if(produto.getIdFornecedor()==fornecedor.getId()) {
+						System.out.println("Não é possivel remover fornecedor pois possui produtos cadastrados.");
+						return false;
+					}
+				}
+				fornecedores.remove(fornecedor);
+				System.out.println("Fornecedor removido");
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean deletarProduto(int idProduto) {
+		for (Produto produto : produtos) {
+			if (produto.getIdProduto() == idProduto) {
+				produtos.remove(produto);
+				System.out.println("Produto removido");
+				return true;
+			}
+		}
+		System.out.println("Produto nao encontrado");
+		return false;
+
+	}
+
+	public Produto buscarProduto(String nome) {
+		for (Produto produto : produtos) {
+			if (produto.getNome().equals(nome)) {
+				return produto;
+			}
+		}
+		return null;
+
+	}
+
+	public Fornecedor buscarFornecedor(String razaoSocial) {
+		for (Fornecedor fornecedor : fornecedores) {
+			if (fornecedor.getRazaosocial().equals(razaoSocial)) {
+				return fornecedor;
+			}
+		}
+		return null;
+	}
+
+	public void editarProduto(String nomeAntigo, String nomeNovo, TipoProduto novoTipo) {
+		Produto produto = buscarProduto(nomeAntigo);
+		if (produto != null) {
+			produto.setNome(nomeNovo);
+			produto.setTipo(novoTipo);
+		}
 	}
 
 	public void mostrarProdutosPorTipo() {
@@ -90,52 +154,31 @@ public class Funcoes {
 		}
 	}
 
-	public void mostrarProdutos() {
-		System.out.println("Produtos: ");
-		for (Produto x : produtos)
-			System.out.println(x);
+	public void fornecedoresPorProduto() {
+		for (Fornecedor fornecedor : fornecedores) {
+			System.out.println(fornecedor.getRazaosocial());
+			for (Produto produto : produtos) {
+				if (fornecedor.getId() == produto.getIdFornecedor()) {
+					System.out.println(produto.getNome());
+				}
+			}
+		}
 	}
 
-	public void deletarProduto(String nome, TipoProduto tipo, int id) {
-		Produto produto = new Produto(nome, tipo, id);
-		produtos.remove(produto);
-		System.out.println("Produto removido");
-	}
-
-	public void deletarFornecedor(int id) {
-		// Fornecedor fornecedor = new Fornecedor(id);
-		// fornecedores.remove(fornecedor);
-		System.out.println("Fornecedor removido");
-	}
-
-	public Produto buscarProduto(String nome) {
+	public String buscarFornecedorProduto(String nome) {
 		for (Produto produto : produtos) {
 			if (produto.getNome().equals(nome)) {
-				return produto;
+				for (Fornecedor fornecedor : fornecedores) {
+					if (produto.getIdFornecedor() == fornecedor.getId()) {
+						return fornecedor.getRazaosocial();
+					}
+				}
 			}
 		}
-		return null;
-
+		return "Produto não encontrado";
 	}
 
-	public Fornecedor buscarFornecedor(String razaoSocial) {
-		for (Fornecedor fornecedor : fornecedores) {
-			if (fornecedor.getRazaosocial().equals(razaoSocial)) {
-				return fornecedor;
-			}
-		}
-		return null;
-	}
-
-	public void editarProduto(String nomeAntigo, String nomeNovo, int id, TipoProduto novoTipo) {
-		Produto produto = buscarProduto(nomeAntigo);
-		if (produto != null) {
-			produto.setNome(nomeNovo);
-			produto.setTipo(novoTipo);
-		}
-	}
-
-	public void editarFornecedor(String razaoSocialAntiga, String razaoSocialNova, int id, int cnpj) {
+	public void editarFornecedor(String razaoSocialAntiga, String razaoSocialNova, int cnpj) {
 		Fornecedor fornecedor = buscarFornecedor(razaoSocialAntiga);
 		fornecedor.setRazaosocial(razaoSocialNova);
 		fornecedor.setCnpj(cnpj);

@@ -9,6 +9,9 @@ public class Fornecedor {
 	private String razaosocial;
 	private int cnpj;
 
+	public Fornecedor(int id) {
+		this.id=id;
+	}
 	public Fornecedor(String razaosocial, int cnpj) {
 		this.id = random.nextInt(100);
 		this.razaosocial = razaosocial;

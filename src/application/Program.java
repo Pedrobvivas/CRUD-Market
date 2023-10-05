@@ -12,7 +12,7 @@ public class Program {
 		Funcoes funcao = new Funcoes();
 		int x;
 		do {
-			System.out.println("=====================Bem-vindo ao Vivas Market=============================");
+			System.out.println("===================== Bem-vindo ao Vivas Market =============================");
 			System.out.println("Selecione o que deseja fazer: ");
 			System.out.println(
 					"1- Realizar cadastro \n2- Realizar atualização \n3- Realizar exclusão \n4- Gerar relatório \n5- Sair");
@@ -31,15 +31,19 @@ public class Program {
 					String nome = sc.nextLine();
 					System.out.print("Digite o tipo: ");
 					TipoProduto tipo = TipoProduto.valueOf(sc.next().toUpperCase());
+					sc.nextLine();
 					System.out.print("Informe o nome do fornecedor: ");
-					String razaoSocial=sc.nextLine();
-					if(funcao.buscaFornecedorNome(razaoSocial)) {
-						funcao.adicionarProduto(nome, tipo, funcao.idFornecedorEncontrado(razaoSocial));
+					String razaoSocial = sc.nextLine();
+					System.out.println("Informe o id do produto: ");
+					int idProduto = sc.nextInt();
+					if (funcao.buscaFornecedorNome(razaoSocial)) {
+						funcao.adicionarProduto(nome, tipo, funcao.idFornecedorEncontrado(razaoSocial), idProduto);
 					}
-					
+
 					break;
 				case 2:
 					System.out.print("Você selecionou fornecedor");
+					System.out.println();
 					System.out.print("Digite a razão social: ");
 					razaoSocial = sc.nextLine();
 					System.out.print("Digite o CNPJ: ");
@@ -62,17 +66,14 @@ public class Program {
 					sc.nextLine();
 					System.out.println("Nome do produto que quer editar: ");
 					String nomeAntigo = sc.nextLine();
-					if(funcao.buscaProdutoNome(nomeAntigo)) {
+					if (funcao.buscaProdutoNome(nomeAntigo)) {
 						System.out.print("Novo nome: ");
 						String nomeNovo = sc.nextLine();
 						System.out.print("Novo tipo: ");
 						TipoProduto tipo = TipoProduto.valueOf(sc.next().toUpperCase());
-						System.out.print("Novo id: ");
-						int id = sc.nextInt();
-						funcao.editarProduto(nomeAntigo, nomeNovo, id, tipo);
+						funcao.editarProduto(nomeAntigo, nomeNovo, tipo);
 						System.out.println("Produto alterado com sucesso!");
-					}
-					else {
+					} else {
 						System.out.println("Produto não encontrado!");
 					}
 					break;
@@ -82,17 +83,14 @@ public class Program {
 					sc.nextLine();
 					System.out.print("Razao social do fornecedor que quer editar: ");
 					String razaoSocialAntiga = sc.nextLine();
-					/*if(funcao.buscarFornecedor(razaoSocialAntiga)) {
+					if (funcao.buscarFornecedor(razaoSocialAntiga) != null) {
 						System.out.println("Nova razao social: ");
 						String razaoSocialNova = sc.nextLine();
-						System.out.println("id novo: ");
-						int id = sc.nextInt();
 						System.out.println("CNPJ: ");
 						int cnpj = sc.nextInt();
-						funcao.editarFornecedor(razaoSocialAntiga, razaoSocialNova, id, cnpj);
+						funcao.editarFornecedor(razaoSocialAntiga, razaoSocialNova, cnpj);
 						System.out.println("Fornecedor alterado com sucesso!");
-					}*/
-					
+					}
 					break;
 				default:
 					System.out.println("Opção inválida");
@@ -107,21 +105,16 @@ public class Program {
 				case 1:
 					System.out.println("Você selecionou 1, escolha qual produto deseja excluir: ");
 					funcao.mostrarProdutos();
-					System.out.print("Digite o nome: ");
-					String nome = sc.nextLine();
-					sc.nextLine();
-					System.out.print("Tipo: ");
-					TipoProduto tipo = TipoProduto.valueOf(sc.next().toUpperCase());
-					System.out.println("id do fornecedor");
-					int id = sc.nextInt();
-					funcao.deletarProduto(nome, tipo, id);
+					System.out.println("id do Produto: ");
+					int idProduto = sc.nextInt();
+					funcao.deletarProduto(idProduto);
 					break;
 				case 2:
 					System.out.println("Você selecionou 2, escolha qual fornecedor deseja excluir: ");
 					funcao.mostrarFornecedores();
 					System.out.println("Digite o id");
-					id = sc.nextInt();
-					funcao.deletarFornecedor(id);
+					int idFornecedor = sc.nextInt();
+					funcao.deletarFornecedor(idFornecedor);
 					break;
 				default:
 					System.out.println("Opção inválida");
@@ -131,11 +124,19 @@ public class Program {
 			case '4':
 				System.out.println("Você selecionou 4, selecione o que deseja gerar: ");
 				System.out.println(
-						"1- Relatório de fornecedor por produto \n2- Relatório de produto por fornecedor \n3- Relatório de produto por tipo"
+						"1- Relatório de fornecedor por produto \n2- Buscar fornecedor de um produto \n3- Relatório de produto por tipo"
 								+ "\n4- Relatório de fornecedores e produtos");
 				y = sc.nextInt();
 				switch (y) {
 
+				case 1:
+					funcao.fornecedoresPorProduto();
+					break;
+				case 2:
+					System.out.println("Digite o nome do produto");
+					String nome = sc.next();
+					System.out.println(funcao.buscarFornecedorProduto(nome));
+					break;
 				case 3:
 					funcao.mostrarProdutosPorTipo();
 					break;

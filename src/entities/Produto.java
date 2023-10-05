@@ -6,29 +6,26 @@ public class Produto {
 
 	private String nome;
 	private TipoProduto tipo;
-	private int id;
-	
-	public Produto(){
+	private int idFornecedor;
+	private int idProduto;
+
+	public Produto(int idProduto) {
+		this.idProduto=idProduto;
 	}
 	
-	
-	
-	public int  getId() {
-		return id;
-	}
-
-
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-
-
-	public Produto(String nome, TipoProduto tipo, int id) {
+	public Produto(String nome, TipoProduto tipo, int idFornecedor, int idProduto) {
 		this.nome = nome;
 		this.tipo = tipo;
-		this.id = id;
+		this.idFornecedor = idFornecedor;
+		this.idProduto = idProduto;
+	}
+
+	public int getIdProduto() {
+		return idProduto;
+	}
+
+	public void setIdProduto(int idProduto) {
+		this.idProduto = idProduto;
 	}
 
 	public String getNome() {
@@ -47,14 +44,17 @@ public class Produto {
 		this.tipo = tipo;
 	}
 
-
-	public void cadastrarProduto (String nome, int tipo){
-		
+	public int getIdFornecedor() {
+		return idFornecedor;
 	}
 
-	
+	public void setIdFornecedor(int idFornecedor) {
+		this.idFornecedor = idFornecedor;
+	}
+
+	@Override
 	public String toString() {
-		return "nome: " + nome + ", tipo: " + tipo + ", id: "+id;
+		return "Nome " + nome + ", tipo=" + tipo + ", idFornecedor=" + idFornecedor+ ", idProduto= "+idProduto;
 	}
 
 }
