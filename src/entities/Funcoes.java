@@ -41,7 +41,7 @@ public class Funcoes {
 	public void adicionarFornecedor(String razaoSocial, int cpnj) {
 		Fornecedor fornecedor = new Fornecedor(razaoSocial, cpnj);
 		fornecedores.add(fornecedor);
-		System.out.println("Fornecedor adicionado com sucessor");
+		System.out.println("Fornecedor adicionado com sucesso!");
 
 	}
 
@@ -49,7 +49,6 @@ public class Funcoes {
 		System.out.println("Fornecedores: ");
 		for (Fornecedor x : fornecedores) {
 			System.out.println(x);
-
 		}
 	}
 
@@ -79,9 +78,9 @@ public class Funcoes {
 
 	public boolean deletarFornecedor(int id) {
 		for (Fornecedor fornecedor : fornecedores) {
-			if (fornecedor.getId() == id) {	
-				for(Produto produto : produtos) {
-					if(produto.getIdFornecedor()==fornecedor.getId()) {
+			if (fornecedor.getId() == id) {
+				for (Produto produto : produtos) {
+					if (produto.getIdFornecedor() == fornecedor.getId()) {
 						System.out.println("Não é possivel remover fornecedor pois possui produtos cadastrados.");
 						return false;
 					}
@@ -91,6 +90,7 @@ public class Funcoes {
 				return true;
 			}
 		}
+		System.out.println("Fornecedor não encontrado.");
 		return false;
 	}
 
@@ -102,7 +102,7 @@ public class Funcoes {
 				return true;
 			}
 		}
-		System.out.println("Produto nao encontrado");
+		System.out.println("Produto não encontrado.");
 		return false;
 
 	}
@@ -156,7 +156,7 @@ public class Funcoes {
 
 	public void fornecedoresPorProduto() {
 		for (Fornecedor fornecedor : fornecedores) {
-			System.out.println(fornecedor.getRazaosocial());
+			System.out.println(fornecedor.getRazaosocial()+ ":");
 			for (Produto produto : produtos) {
 				if (fornecedor.getId() == produto.getIdFornecedor()) {
 					System.out.println(produto.getNome());

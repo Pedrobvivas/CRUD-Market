@@ -34,12 +34,14 @@ public class Program {
 					sc.nextLine();
 					System.out.print("Informe o nome do fornecedor: ");
 					String razaoSocial = sc.nextLine();
-					System.out.println("Informe o id do produto: ");
+					System.out.print("Informe o id do produto: ");
 					int idProduto = sc.nextInt();
 					if (funcao.buscaFornecedorNome(razaoSocial)) {
 						funcao.adicionarProduto(nome, tipo, funcao.idFornecedorEncontrado(razaoSocial), idProduto);
 					}
-
+					else {
+						System.out.println("Produto não adicionado, não existe esse fornecedor.");
+					}
 					break;
 				case 2:
 					System.out.print("Você selecionou fornecedor");
@@ -90,6 +92,9 @@ public class Program {
 						int cnpj = sc.nextInt();
 						funcao.editarFornecedor(razaoSocialAntiga, razaoSocialNova, cnpj);
 						System.out.println("Fornecedor alterado com sucesso!");
+					}
+					else {
+						System.out.println("Fornecedor não encontrado.");
 					}
 					break;
 				default:
