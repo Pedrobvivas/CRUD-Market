@@ -11,7 +11,7 @@ public class Funcoes {
 
 	private List<Produto> produtos;
 	private List<Fornecedor> fornecedores;
-	private String prodAtual;
+	
 
 	public Funcoes() {
 		produtos = new ArrayList<>();
